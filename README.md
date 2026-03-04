@@ -1,4 +1,15 @@
 # Nu primesc notă pentru că nu am pus titlu și descriere
+## Titlu: The Continental Registry
+## Descriere:
+Continental Shield este o aplicație C++ de tip simulator administrativ, care transpune rigoarea și protocoalele universului John Wick într-o platformă de gestiune a resurselor de elită. Proiectul funcționează ca un nucleu digital de comandă, coordonând interacțiunea dintre infrastructura hotelieră, arsenalul logistic și agenții operaționali.
+## Ce face proiectul:
+- Gestiune Tactica: Administrează registrul activ al hotelului în timp real, monitorizând parametri critici (viabilitatea agenților, nivelul de alertă locală și fondurile de aur) prin mecanisme avansate de încapsulare și abstractizare.
+
+- Motor de Configurare (Loadout Engine): Validează compatibilitatea echipamentului cu profilul misiunii (de exemplu, sistemul verifică dacă armura aleasă nu restricționează mobilitatea necesară pentru un anumit contract) și generează entități complexe de tip „Unitate Operațională”.
+
+- Sistem de Decontare și Arbitraj: Procesează automat taxele către „Masa de Sus” (The High Table) și recalculează instantaneu balanța de active și pasive ale hotelului după fiecare rezoluție de contract.
+
+- Mapare de Protocol (Tactical Dummy): Implementează un sistem de sloturi logice pentru a simula echiparea unui agent (Head, Torso, Primary Weapon, Sidearm), mapând obiectele din inventarul digital direct pe punctele de ancorare ale profilului de asasin.
 
 ### Folosiți template-ul corespunzător grupei voastre!
 

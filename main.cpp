@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <utility>
 
 class Arma {
 private:
@@ -17,7 +16,6 @@ public:
     }
 };
 
-
 class Asasin {
 private:
     std::string nume;
@@ -27,25 +25,18 @@ public:
     explicit Asasin(const std::string& nume_, int viata_, const Arma& arma_)
         : nume{nume_}, viata{viata_}, arma{arma_} {}
 
-
-    //constructor de copiere
     Asasin(const Asasin& other)
-        : nume{other.nume + " (Copie)"}, viata{other.viata}, arma{other.arma} {
-        std::cout << "DEBUG: S-a copiat asasinul " << other.nume << "\n";
-    }
+        : nume{other.nume + " (Copie)"}, viata{other.viata}, arma{other.arma} {}
 
-    //operator= de copiere si atribuire
     Asasin& operator=(const Asasin& other) {
         if (this != &other) {
             nume = other.nume;
             viata = other.viata;
             arma = other.arma;
         }
-        std::cout << "DEBUG: Operator= apelat pentru " << other.nume << "\n";
         return *this;
     }
 
-    //destructor
     ~Asasin() = default;
 
     friend std::ostream& operator<<(std::ostream& os, const Asasin& as) {
@@ -53,7 +44,6 @@ public:
         return os;
     }
 };
-
 
 class HotelContinental {
 private:
@@ -80,24 +70,19 @@ public:
 };
 
 int main() {
-
     Arma hk{"HK P30", 15};
-
     Asasin john{"John Wick", 100, hk};
     Asasin perkins{"Ms. Perkins", 80, Arma{"Pistol cu amortizor", 10}};
 
     HotelContinental hotel{"New York"};
-
     hotel.cazeaza(john);
     hotel.cazeaza(perkins);
 
     hotel.afiseazaRegistru();
-
     std::cout << "\nStatus Hotel: " << hotel << "\n";
 
     Asasin asasinBasic{"Nimeni", 0, Arma{"Rugina", 0}};
     asasinBasic = john;
-
     std::cout << "Asasin generic dupa atribuire: " << asasinBasic << "\n";
 
     return 0;

@@ -29,14 +29,16 @@ void HotelContinental::organizeazaDuel(size_t idx1, size_t idx2) {
 
 void HotelContinental::evacueazaDecedatii() {
     size_t countInainte = oaspeti.size();
-    auto it = std::remove_if(oaspeti.begin(), oaspeti.end(),
-        [](const Asasin& a) { return !a.esteInViata(); });
+
+   auto it = std::remove_if(oaspeti.begin(), oaspeti.end(), [](const Asasin& a) {
+       return !a.esteInViata();
+   });
 
     oaspeti.erase(it, oaspeti.end());
-    size_t eliminate = countInainte - oaspeti.size();
 
+    size_t eliminate = countInainte - oaspeti.size();
     if (eliminate > 0) {
-        std::cout << "[CLEANUP] " << eliminate << " oaspeti au parasit hotelul definitiv (decedati).\n";
+        std::cout << "[CLEANUP] " << eliminate << " oaspeti eliminati.\n";
     }
 }
 
@@ -80,6 +82,7 @@ void HotelContinental::afiseazaAvizier() const {
         std::cout << " [!] " << m << "\n";
     }
 }
+
 
 std::ostream& operator<<(std::ostream& os, const HotelContinental& h) {
     os << "Continental " << h.oras << " | Resurse: " << h.seifGold << " gold | Oaspeti: " << h.oaspeti.size();

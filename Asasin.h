@@ -13,11 +13,15 @@
 
 class Asasin {
 private:
+    int nivel = 1;
     std::string nume;
     int viata;
     int experienta;
     Arma arma;
     std::vector<std::string> distinctii;
+    std::vector<std::string> inventar;
+    bool esteInfiltrat = false;
+    // int misiuniEfectuate = 0;
 
 public:
     explicit Asasin(const std::string& nume_, int viata_, const Arma& arma_);
@@ -30,7 +34,17 @@ public:
     void primesteDamage(int dmg);
     void antrenament();
 
+    int getNivel() const { return nivel; }
+    int getViata() const { return viata; }
     bool esteInViata() const { return viata > 0; }
+
+    void cresteExperienta(int puncte);
+    void adaugaDistinctie(const std::string& numeDistinctie);
+    void colecteazaItem(const std::string& item);
+    void folosesteItem(const std::string& item);
+    void activeazaModInfiltrare();
+    void afiseazaStatusComplet() const;
+
     const std::string& getNume() const { return nume; }
 
     friend std::ostream& operator<<(std::ostream& os, const Asasin& as);

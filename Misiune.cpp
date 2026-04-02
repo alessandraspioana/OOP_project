@@ -16,6 +16,7 @@ void Misiune::finalizeaza() {
     finalizata = true;
 }
 
+
 std::ostream& operator<<(std::ostream& os, const Misiune& m) {
     os << "Misiune: " << m.descriere << " (Dif: " << m.dificultate 
        << ", Recompensa: " << m.recompensaGold << " gold)";

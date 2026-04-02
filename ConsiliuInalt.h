@@ -29,7 +29,7 @@ public:
     explicit ConsiliuInalt(const std::string& numeLider);
 
     void adaugaHotel(const HotelContinental& h);
-    void emiteExcommunicado(Asasin& a);
+    static void emiteExcommunicado(Asasin& a);
     void adaugaRegula(const std::string& regula);
     void afiseazaCodex() const;
 

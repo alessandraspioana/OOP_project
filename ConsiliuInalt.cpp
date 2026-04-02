@@ -3,8 +3,8 @@
 #include <iomanip>
 
 ConsiliuInalt::ConsiliuInalt(const std::string& numeLider) 
-    : lider(numeLider) {
-    stats = {0, 0, 100000};
+    : lider(numeLider), stats{0, 0, 100000} {
+    // stats a fost mutat sus, deci corpul constructorului e mai curat
     reguliCodex.push_back("Nu se varsa sange pe domeniul Continental.");
     reguliCodex.push_back("Fiecare bilet trebuie onorat.");
 }

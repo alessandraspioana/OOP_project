@@ -3,8 +3,8 @@
 #include "Arma.h"
 #include <iostream>
 
-int main() {
 
+int main() {
     std::cout << "--- Initializare Arsenal ---\n";
     Arma hk("HK P30", 15);
     Arma glock("Glock 17", 17);
@@ -37,6 +37,4 @@ int main() {
     Asasin asasinNou("Nimeni", 50, creion);
     asasinNou = john;
     std::cout << "Dupa atribuire: " << asasinNou << "\n";
-
-    return 0;
 }

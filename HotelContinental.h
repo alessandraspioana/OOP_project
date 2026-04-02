@@ -19,7 +19,7 @@ public:
     explicit HotelContinental(const std::string& oras_);
 
     void cazeaza(const Asasin& a);
-    void organizeazaDuel(int idx1, int idx2);
+    void organizeazaDuel(std::size_t idx1, std::size_t idx2);
     void evacueazaDecedatii();
     void afiseazaRegistru() const;
 

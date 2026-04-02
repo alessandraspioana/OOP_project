@@ -22,6 +22,9 @@ Asasin& Asasin::operator=(const Asasin& other) {
         experienta = other.experienta;
         arma = other.arma;
         distinctii = other.distinctii;
+        inventar = other.inventar;
+        nivel = other.nivel;
+        esteInfiltrat = other.esteInfiltrat;
     }
     return *this;
 }
@@ -132,7 +135,7 @@ void Asasin::ataca(Asasin& tinta) {
         tinta.primesteDamage(20 + (experienta / 10) + bonusDamage);
 
         experienta += 5;
-        if (esteInfiltrat) esteInfiltrat = false;
+        esteInfiltrat = false;
     } else {
         std::cout << nume << " a esuat atacul!\n";
     }

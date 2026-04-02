@@ -55,6 +55,8 @@ int main() {
 
     hotelRoma.organizeazaDuel(0, 1);
 
+    std::cout << "DEBUG: Nivel " << john.getNivel() << " HP: " << john.getViata() << "\n";
+
     std::cout << "\n--- Interventie Consiliu ---\n";
     consiliu.afiseazaCodex();
 

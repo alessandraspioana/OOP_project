@@ -59,6 +59,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         HotelContinental.h
         Misiune.cpp
         Misiune.h
+        ConsiliuInalt.cpp
+        ConsiliuInalt.h
 )
 target_sources(${MAIN_EXECUTABLE_NAME}
     PRIVATE

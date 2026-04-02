@@ -51,5 +51,16 @@ int main() {
     std::cout << "Asasin rezerva dupa upgrade la John Wick: " << asasinRezerva << "\n";
 
     std::cout << "\n=== SIMULARE INCHEIATA ===\n";
+
+    std::cout << "\n--- Administrare Hotel ---\n";
+    std::cout << "Status inainte: " << hotel << "\n";
+
+    hotel.aprovizionareSeif(1500);
+
+    std::cout << "Status dupa aprovizionare seif: " << hotel << "\n";
+
+    std::cout << "\n=== SIMULARE INCHEIATA ===\n";
+    return 0;
+}
     return 0;
 }

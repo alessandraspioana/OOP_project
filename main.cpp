@@ -3,12 +3,13 @@
 #include "Arma.h"
 #include <iostream>
 
-
 int main() {
     std::cout << "--- Initializare Arsenal ---\n";
     Arma hk("HK P30", 15);
     Arma glock("Glock 17", 17);
     Arma creion("Creion Ticonderoga", 1);
+
+    std::cout << "Arma principala are " << hk.getGloante() << " gloante.\n";
 
     Asasin john("John Wick", 100, hk);
     Asasin cassian("Cassian", 100, glock);
@@ -20,6 +21,10 @@ int main() {
     hotelNY.cazeaza(cassian);
 
     std::cout << "\n--- Pregatiri ---\n";
+
+    john.antrenament();
+
+    hk.reincarca(5);
 
     hotelNY.afiseazaRegistru();
 
@@ -37,4 +42,6 @@ int main() {
     Asasin asasinNou("Nimeni", 50, creion);
     asasinNou = john;
     std::cout << "Dupa atribuire: " << asasinNou << "\n";
+
+    return 0;
 }

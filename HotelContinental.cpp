@@ -14,7 +14,7 @@ void HotelContinental::cazeaza(const Asasin& a) {
     std::cout << "[HOTEL] " << a.getNume() << " s-a cazat la Continental " << oras << ".\n";
 }
 
-void HotelContinental::organizeazaDuel(int idx1, int idx2) {
+void HotelContinental::organizeazaDuel(const std::size_t idx1, const std::size_t idx2) {
     if (idx1 < oaspeti.size() && idx2 < oaspeti.size()) {
         std::cout << "\n--- DUEL IN " << oras << " ---\n";
         oaspeti[idx1].ataca(oaspeti[idx2]);
@@ -24,8 +24,8 @@ void HotelContinental::organizeazaDuel(int idx1, int idx2) {
 
 void HotelContinental::evacueazaDecedatii() {
 
-    auto it = std::remove_if(oaspeti.begin(), oaspeti.end(),
-        [](const Asasin& a) { return !a.esteInViata(); });
+    const auto it = std::ranges::remove_if(oaspeti,
+                                     [](const Asasin& a) { return !a.esteInViata(); }).begin();
 
     if (it != oaspeti.end()) {
         std::cout << "[HOTEL] Au fost evacuate cadavrele din Continental.\n";

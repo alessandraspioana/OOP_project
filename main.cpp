@@ -76,5 +76,52 @@ int main() {
     std::cout << "======================================================\n";
     std::cout << "Sistem inchis cu succes.\n";
 
+    HotelContinental hotelNY("New York", 2000);
+
+    consiliu.adaugaHotel(hotelNY);
+    consiliu.adaugaHotel(hotelRoma);
+
+    consiliu.genereazaAuditFinanciar();
+    consiliu.upgradeSecuritateGlobala();
+
+    consiliu.genereazaRaportGlobal();
+
+
+    Asasin inamic("Inamic Sindicat", 80, glock);
+
+    std::cout << "--- START TESTARE SISTEM INVENTAR SI STATUS ---\n";
+
+    john.colecteazaItem("Trusa Medicala");
+    john.colecteazaItem("Adrenalina");
+    john.colecteazaItem("Moneda Aur");
+    john.colecteazaItem("Cutit");
+    john.colecteazaItem("Grenada");
+    john.colecteazaItem("Paine");
+
+    john.afiseazaStatusComplet();
+
+    std::cout << "\n--- SIMULARE LUPTA ---\n";
+
+    john.activeazaModInfiltrare();
+
+    john.ataca(inamic);
+
+    std::cout << "\n--- FOLOSIRE RESURSE ---\n";
+
+    john.primesteDamage(60);
+
+    john.folosesteItem("Trusa Medicala");
+
+    john.folosesteItem("Adrenalina");
+
+    john.folosesteItem("Pistol Laser");
+
+    john.cresteExperienta(50);
+
+    john.adaugaDistinctie("Supravietuitor NY");
+    john.afiseazaStatusComplet();
+
+    std::cout << "--- TESTARE FINALIZATA ---\n";
+
     return 0;
 }

@@ -32,6 +32,8 @@ public:
     static void emiteExcommunicado(Asasin& a);
     void adaugaRegula(const std::string& regula);
     void afiseazaCodex() const;
+    void genereazaAuditFinanciar() const;
+    void upgradeSecuritateGlobala();
 
     void genereazaRaportGlobal() const;
     bool verificaIncalcareaRegulilor(const std::string& actiune) const;

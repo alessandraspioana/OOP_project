@@ -54,6 +54,59 @@ void ConsiliuInalt::finanteazaHotel(const size_t idx, const int suma) {
     }
 }
 
+void ConsiliuInalt::genereazaAuditFinanciar() const {
+    int aurTotalHoteluri = 0;
+    int pragCritic = 1000;
+
+    std::cout << "\n==========================================\n";
+    std::cout << "       AUDIT GLOBAL - HIGH TABLE          \n";
+    std::cout << "==========================================\n";
+    std::cout << "Lider de operatiuni: " << lider << "\n";
+    std::cout << "Fonduri de urgenta Consiliu: " << stats.goldInCirculatie << "\n";
+    std::cout << "------------------------------------------\n";
+
+    if (reteaHoteliera.empty()) {
+        std::cout << "[INFO] Nu exista hoteluri inregistrate in retea.\n";
+    } else {
+        for (size_t i = 0; i < reteaHoteliera.size(); ++i) {
+            // Folosim operatorul << pe care l-ai implementat deja pentru Hotel
+            std::cout << "Unitatea [" << i << "]: " << reteaHoteliera[i] << "\n";
+
+            // Aici am putea aduna fondurile daca ai avea h.getSeifGold()
+            // Daca nu ai getter, ne limitam la afisarea statusului.
+        }
+    }
+
+    std::cout << "------------------------------------------\n";
+    if (stats.goldInCirculatie < 50000) {
+        std::cout << "[ALERTA] Fondurile Consiliului sunt scazute! Se recomanda colectarea de taxe.\n";
+    } else {
+        std::cout << "[STATUS] Rezervele de aur sunt in parametri optimi.\n";
+    }
+    std::cout << "==========================================\n";
+}
+
+void ConsiliuInalt::upgradeSecuritateGlobala() {
+    std::cout << "\n[PROTOCOL 0] Initiere upgrade securitate in toata reteaua...\n";
+
+    int costPerUnitate = 5000;
+    int unitatiActualizate = 0;
+
+    for (size_t i = 0; i < reteaHoteliera.size(); ++i) {
+        if (stats.goldInCirculatie >= costPerUnitate) {
+            stats.goldInCirculatie -= costPerUnitate;
+            // Trimitem fonduri pentru "sisteme de aparare" (folosind functia existenta)
+            reteaHoteliera[i].aprovizionareSeif(costPerUnitate);
+            unitatiActualizate++;
+            std::cout << " > Hotelul de la index [" << i << "] a fost securizat.\n";
+        } else {
+            std::cout << " > [!] Fonduri insuficiente pentru unitatea [" << i << "].\n";
+        }
+    }
+
+    std::cout << "[FINISH] Operatiune finalizata. Unitati updatate: " << unitatiActualizate << ".\n";
+}
+
 std::ostream& operator<<(std::ostream& os, const ConsiliuInalt& c) {
     os << "Consiliu Inalt administrat de " << c.lider << " | Reguli active: " << c.reguliCodex.size();
     return os;

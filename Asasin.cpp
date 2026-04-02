@@ -70,7 +70,6 @@ void Asasin::colecteazaItem(const std::string& item) {
 }
 
 void Asasin::folosesteItem(const std::string& item) {
-    // Cautam item-ul in vector (asta adauga complexitate si linii)
     auto it = std::find(inventar.begin(), inventar.end(), item);
 
     if (it != inventar.end()) {
@@ -78,7 +77,7 @@ void Asasin::folosesteItem(const std::string& item) {
 
         if (item == "Trusa Medicala") {
             viata += 50;
-            if (viata > 150) viata = 150; // Cap la viata
+            if (viata > 150) viata = 150;
             std::cout << " > Viata a crescut la " << viata << " HP.\n";
         }
         else if (item == "Adrenalina") {
@@ -86,7 +85,7 @@ void Asasin::folosesteItem(const std::string& item) {
             std::cout << " > Experienta a crescut bonus cu 30 puncte.\n";
         }
 
-        inventar.erase(it); // Scoatem item-ul dupa folosire
+        inventar.erase(it);
     } else {
         std::cout << "[ERROR] Item-ul " << item << " nu a fost gasit in inventar.\n";
     }
@@ -123,18 +122,17 @@ void Asasin::afiseazaStatusComplet() const {
     std::cout << "\n========================================\n";
 }
 
-// Modificam si ataca() sa tina cont de infiltrat
 void Asasin::ataca(Asasin& tinta) {
     if (!esteInViata()) return;
 
-    int bonusDamage = esteInfiltrat ? 15 : 0; // Damage extra daca ataci din umbra
+    int bonusDamage = esteInfiltrat ? 15 : 0;
 
     if (arma.trage()) {
         std::cout << nume << (esteInfiltrat ? " (din umbra)" : "") << " il ataca pe " << tinta.getNume() << "!\n";
         tinta.primesteDamage(20 + (experienta / 10) + bonusDamage);
 
         experienta += 5;
-        if (esteInfiltrat) esteInfiltrat = false; // Iese din stealth dupa atac
+        if (esteInfiltrat) esteInfiltrat = false;
     } else {
         std::cout << nume << " a esuat atacul!\n";
     }

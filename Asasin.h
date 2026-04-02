@@ -21,7 +21,7 @@ private:
     std::vector<std::string> distinctii;
     std::vector<std::string> inventar;
     bool esteInfiltrat = false;
-    int misiuniEfectuate = 0;
+    // int misiuniEfectuate = 0;
 
 public:
     explicit Asasin(const std::string& nume_, int viata_, const Arma& arma_);
@@ -43,7 +43,7 @@ public:
     void colecteazaItem(const std::string& item);
     void folosesteItem(const std::string& item);
     void activeazaModInfiltrare();
-    void afiseazaStatusComplet() const; // Aici bagam multe linii de afisare
+    void afiseazaStatusComplet() const;
 
     const std::string& getNume() const { return nume; }
 

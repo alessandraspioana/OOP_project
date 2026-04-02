@@ -4,7 +4,6 @@
 
 ConsiliuInalt::ConsiliuInalt(const std::string& numeLider) 
     : lider(numeLider), stats{0, 0, 100000} {
-    // stats a fost mutat sus, deci corpul constructorului e mai curat
     reguliCodex.push_back("Nu se varsa sange pe domeniul Continental.");
     reguliCodex.push_back("Fiecare bilet trebuie onorat.");
 }
@@ -55,8 +54,8 @@ void ConsiliuInalt::finanteazaHotel(const size_t idx, const int suma) {
 }
 
 void ConsiliuInalt::genereazaAuditFinanciar() const {
-    int aurTotalHoteluri = 0;
-    int pragCritic = 1000;
+    // int aurTotalHoteluri = 0;
+    // int pragCritic = 1000;
 
     std::cout << "\n==========================================\n";
     std::cout << "       AUDIT GLOBAL - HIGH TABLE          \n";
@@ -69,11 +68,8 @@ void ConsiliuInalt::genereazaAuditFinanciar() const {
         std::cout << "[INFO] Nu exista hoteluri inregistrate in retea.\n";
     } else {
         for (size_t i = 0; i < reteaHoteliera.size(); ++i) {
-            // Folosim operatorul << pe care l-ai implementat deja pentru Hotel
             std::cout << "Unitatea [" << i << "]: " << reteaHoteliera[i] << "\n";
 
-            // Aici am putea aduna fondurile daca ai avea h.getSeifGold()
-            // Daca nu ai getter, ne limitam la afisarea statusului.
         }
     }
 
@@ -95,7 +91,6 @@ void ConsiliuInalt::upgradeSecuritateGlobala() {
     for (size_t i = 0; i < reteaHoteliera.size(); ++i) {
         if (stats.goldInCirculatie >= costPerUnitate) {
             stats.goldInCirculatie -= costPerUnitate;
-            // Trimitem fonduri pentru "sisteme de aparare" (folosind functia existenta)
             reteaHoteliera[i].aprovizionareSeif(costPerUnitate);
             unitatiActualizate++;
             std::cout << " > Hotelul de la index [" << i << "] a fost securizat.\n";

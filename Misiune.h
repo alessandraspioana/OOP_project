@@ -21,12 +21,10 @@ private:
 public:
     explicit Misiune(const std::string& desc, int dif, int bani);
 
-    // Funcționalități netriviale
     void adaugaCerinta(const std::string& text);
     bool poateFiExecutata(int nivelAsasin) const;
     void finalizeaza();
 
-    // Getters
     int getRecompensa() const { return recompensaGold; }
     bool esteFinalizata() const { return finalizata; }
     const std::string& getDescriere() const { return descriere; }

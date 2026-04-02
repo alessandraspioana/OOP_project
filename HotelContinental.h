@@ -1,30 +1,29 @@
-//
-// Created by aless on 4/2/2026.
-//
-
-#ifndef OOP_HOTELCONTINENTAL_H
-#define OOP_HOTELCONTINENTAL_H
-
-
 #pragma once
 #include <vector>
+#include <string>
 #include "Asasin.h"
+#include "Misiune.h"
 
 class HotelContinental {
 private:
     std::string oras;
     std::vector<Asasin> oaspeti;
+    std::vector<Misiune> avizierMisiuni;
+    int seifGold;
 
 public:
-    explicit HotelContinental(const std::string& oras_);
+    explicit HotelContinental(const std::string& oras_, int goldInitial = 5000);
 
     void cazeaza(const Asasin& a);
-    void organizeazaDuel(std::size_t idx1, std::size_t idx2);
     void evacueazaDecedatii();
-    void afiseazaRegistru() const;
+    void organizeazaDuel(size_t idx1, size_t idx2);
 
+    void adaugaMisiune(const Misiune& m);
+    void afiseazaRegistru() const;
+    void afiseazaAvizier() const;
+    void executaContract(size_t idxAsasin, size_t idxMisiune);
+
+    void aprovizionareSeif(int suma) { seifGold += suma; }
+    
     friend std::ostream& operator<<(std::ostream& os, const HotelContinental& h);
 };
-
-
-#endif //OOP_HOTELCONTINENTAL_H

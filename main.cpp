@@ -73,7 +73,9 @@ public:
     void folosesteItem(std::string item);
     void activeazaModInfiltrare();
     void afiseazaStatusComplet() const;
+    void evalueazaTitluOnorific();
 
+    [[nodiscard]] std::string getDescriereRang() const;
     [[nodiscard]] bool esteInViata() const { return viata > 0; }
     [[nodiscard]] const std::string& getNume() const { return nume; }
     [[nodiscard]] int getNivel() const { return nivel; }
@@ -98,6 +100,7 @@ public:
     void afiseazaRegistru() const;
     void afiseazaAvizier() const;
     void aprovizionareSeif(int suma) { seifGold += suma; }
+    void simuleazaNoapteInHotel();
 
     friend std::ostream& operator<<(std::ostream& os, const HotelContinental& h);
 };
@@ -301,6 +304,28 @@ void Asasin::afiseazaStatusComplet() const {
               << " | XP: " << this->experienta << " | LVL: " << this->nivel << std::endl;
 }
 
+void Asasin::evalueazaTitluOnorific() {
+    std::cout << "[RANKING] Se evalueaza rangul pentru " << this->nume << "..." << std::endl;
+
+    if (this->nivel > 10 && this->distinctii.size() > 3) {
+        this->adaugaDistinctie("Grandmaster of the Continental");
+    } else if (this->nivel > 5) {
+        this->adaugaDistinctie("Elite Operative");
+    } else {
+        std::cout << " > Rang actual: Ucenic (necesita mai multa experienta)." << std::endl;
+    }
+
+    double putereRelativa = (this->viata * 0.4) + (this->nivel * 10.0);
+    std::cout << " > Indice de periculozitate calculat: " << std::fixed << std::setprecision(2)
+              << putereRelativa << std::endl;
+}
+
+[[nodiscard]] std::string Asasin::getDescriereRang() const {
+    if (this->nivel >= 10) return "Legenda Vie";
+    if (this->nivel >= 5) return "Profesionist";
+    return "Incepator";
+}
+
 std::ostream& operator<<(std::ostream& os, const Asasin& as) {
     os << as.nume << " (HP: " << as.viata << ")";
     return os;
@@ -354,6 +379,31 @@ void HotelContinental::afiseazaAvizier() const {
     for (const auto& ms : this->avizierMisiuni) {
         std::cout << " ! " << ms << std::endl;
     }
+}
+
+void HotelContinental::simuleazaNoapteInHotel() {
+    std::cout << "\n[EVENT] Noaptea cade peste hotelul din " << this->oras << "..." << std::endl;
+
+    if (this->oaspeti.empty()) {
+        std::cout << " > Hotelul este pustiu. Liniste deplina." << std::endl;
+        return;
+    }
+
+    for (auto& as : this->oaspeti) {
+        if (as.getViata() < 50) {
+            std::cout << " > " << as.getNume() << " primeste ingrijiri medicale de urgenta." << std::endl;
+            as.folosesteItem("Trusa");
+        } else {
+            std::cout << " > " << as.getNume() << " se odihneste. Recuperare usoara." << std::endl;
+            as.primesteDamage(-5);
+        }
+        if (as.getNivel() > 2) {
+            std::cout << " > Verificare echipament finalizata pentru " << as.getNume() << "." << std::endl;
+        }
+    }
+
+    this->seifGold += 100;
+    std::cout << " > Taxe de noapte colectate. Seif nou: " << this->seifGold << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const HotelContinental& h) {
@@ -565,6 +615,20 @@ int main() {
     std::cout << "Sediu: " << bursa.getSediu() << " | Contracte: " << bursa.getNumarContracte() << std::endl;
 
     bursa.anuleazaBounty("Santino D'Antonio");
+
+    std::cout << "\n========== TESTARE SISTEM AVANSAT ==========\n";
+
+    john.cresteExperienta(500);
+    john.evalueazaTitluOnorific();
+    std::cout << "Rang John: " << john.getDescriereRang() << std::endl;
+
+    hotel.cazeaza(john);
+    hotel.simuleazaNoapteInHotel();
+
+    consiliu.genereazaAuditFinanciar();
+
+    std::cout << "\n[SUCCESS] Toate sistemele sunt operationale." << std::endl;
+    std::cout << "============================================\n";
 
     return 0;
 }

@@ -436,7 +436,10 @@ void BursaAsasinilor::anuleazaBounty(const std::string& nume) {
 }
 
 int BursaAsasinilor::calculeazaTaxaConsiliu(int suma) const {
-    // Taxa de 10% pentru Consiliul Inalt
+    if (this->sediuCentral.empty()) {
+        return 0;
+    }
+
     return static_cast<int>(suma * 0.1);
 }
 

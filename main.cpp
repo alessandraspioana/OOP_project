@@ -336,6 +336,7 @@ ConsiliuInalt::ConsiliuInalt(std::string numeLider)
 void ConsiliuInalt::adaugaHotel(HotelContinental h) {
     this->reteaHoteliera.push_back(std::move(h));
     this->stats.totalAsasini += 1;
+    this->stats.misiuniCompletate += 0;
 }
 
 void ConsiliuInalt::emiteExcommunicado(Asasin& a) {
@@ -355,8 +356,9 @@ void ConsiliuInalt::afiseazaCodex() const {
 }
 
 void ConsiliuInalt::genereazaRaportGlobal() const {
-    std::cout << "Raport lider: " << this->lider << " | Fonduri: "
-              << this->stats.goldInCirculatie << std::endl;
+    std::cout << "Raport lider: " << this->lider << std::endl;
+    std::cout << "Fonduri: " << this->stats.goldInCirculatie << std::endl;
+    std::cout << "Misiuni raportate la nivel global: " << this->stats.misiuniCompletate << std::endl;
 }
 
 void ConsiliuInalt::finanteazaHotel(size_t idx, int suma) {

@@ -127,6 +127,39 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ConsiliuInalt& c);
 };
 
+class BursaAsasinilor {
+private:
+    struct Bounty {
+        std::string numeTinta;
+        int recompensa;
+        int periculozitate;
+        bool esteActiv;
+    };
+
+    std::string sediuCentral;
+    std::vector<Bounty> contracteDeschise;
+    std::vector<std::string> istoricLichidari;
+    int fondTotalPremii;
+
+public:
+    explicit BursaAsasinilor(std::string sediu, int fondInitial = 100000);
+
+    void publicaBounty(std::string nume, int bani, int risc);
+    void anuleazaBounty(const std::string& nume);
+
+    [[nodiscard]] int calculeazaTaxaConsiliu(int suma) const;
+    void proceseazaRecompensa(Asasin& vanator, size_t indexContract);
+
+    void afiseazaCeleMaiCautateTinte() const;
+    void genereazaStatisticiBursa() const;
+    void suplimenteazaFonduri(int suma);
+
+    [[nodiscard]] size_t getNumarContracte() const { return contracteDeschise.size(); }
+    [[nodiscard]] const std::string& getSediu() const { return sediuCentral; }
+
+    friend std::ostream& operator<<(std::ostream& os, const BursaAsasinilor& b);
+};
+
 // implementarea functiilor (ce  era inaitnein fisierele de cpp)
 Arma::Arma(std::string model_, int cap_)
     : model{std::move(model_)},
@@ -383,6 +416,80 @@ std::ostream& operator<<(std::ostream& os, const ConsiliuInalt& c) {
     return os;
 }
 
+BursaAsasinilor::BursaAsasinilor(std::string sediu, int fondInitial)
+    : sediuCentral(std::move(sediu)), fondTotalPremii(fondInitial) {
+}
+
+void BursaAsasinilor::publicaBounty(std::string nume, int bani, int risc) {
+    Bounty nou = {std::move(nume), bani, risc, true};
+    this->contracteDeschise.push_back(nou);
+    std::cout << "[BURSA] Contract nou pe numele: " << nou.numeTinta << " | Recompensa: " << bani << std::endl;
+}
+
+void BursaAsasinilor::anuleazaBounty(const std::string& nume) {
+    for (auto& b : this->contracteDeschise) {
+        if (b.numeTinta == nume) {
+            b.esteActiv = false;
+            std::cout << "[BURSA] Contractul pentru " << nume << " a fost retras." << std::endl;
+        }
+    }
+}
+
+int BursaAsasinilor::calculeazaTaxaConsiliu(int suma) const {
+    // Taxa de 10% pentru Consiliul Inalt
+    return static_cast<int>(suma * 0.1);
+}
+
+void BursaAsasinilor::proceseazaRecompensa(Asasin& vanator, size_t indexContract) {
+    if (indexContract >= this->contracteDeschise.size()) {
+        std::cout << "[ERROR] Index contract invalid la Bursa." << std::endl;
+        return;
+    }
+
+    Bounty& b = this->contracteDeschise[indexContract];
+    if (b.esteActiv && vanator.esteInViata()) {
+        int taxa = calculeazaTaxaConsiliu(b.recompensa);
+        int sumaFinala = b.recompensa - taxa;
+
+        this->fondTotalPremii -= b.recompensa;
+        b.esteActiv = false;
+        this->istoricLichidari.push_back(b.numeTinta);
+
+        vanator.cresteExperienta(b.periculozitate * 20);
+        vanator.adaugaDistinctie("Vânător de recompense: " + b.numeTinta);
+
+        std::cout << "[RECOMPENSA] " << vanator.getNume() << " a incasat " << sumaFinala
+                  << " Gold (Taxa Consiliu: " << taxa << ")" << std::endl;
+    }
+}
+
+void BursaAsasinilor::afiseazaCeleMaiCautateTinte() const {
+    std::cout << "\n--- MOST WANTED - SEDIU: " << this->sediuCentral << " ---" << std::endl;
+    for (const auto& b : this->contracteDeschise) {
+        if (b.esteActiv) {
+            std::cout << " Tinta: " << std::setw(15) << b.numeTinta
+                      << " | Premiu: " << b.recompensa << " | Risc: " << b.periculozitate << std::endl;
+        }
+    }
+}
+
+void BursaAsasinilor::genereazaStatisticiBursa() const {
+    std::cout << "\n--- STATISTICI BURSA ---" << std::endl;
+    std::cout << " Contracte finalizate: " << this->istoricLichidari.size() << std::endl;
+    std::cout << " Fonduri ramase in seif: " << this->fondTotalPremii << std::endl;
+    std::cout << " Ultima lichidare: " << (istoricLichidari.empty() ? "N/A" : istoricLichidari.back()) << std::endl;
+}
+
+void BursaAsasinilor::suplimenteazaFonduri(int suma) {
+    this->fondTotalPremii += suma;
+    std::cout << "[BURSA] Fonduri suplimentate cu " << suma << ". Total: " << this->fondTotalPremii << std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const BursaAsasinilor& b) {
+    os << "Bursa Asasinilor (" << b.sediuCentral << ") - Fonduri: " << b.fondTotalPremii;
+    return os;
+}
+
 int main() {
     Arma glock("Glock", 10);
     glock.reincarca(5);
@@ -439,6 +546,22 @@ int main() {
     consiliu.emiteExcommunicado(john);
 
     std::cout << "Status Consiliu: " << consiliu << std::endl;
+
+    BursaAsasinilor bursa("Marrakech", 250000);
+    bursa.publicaBounty("Iosef Tarasov", 50000, 4);
+    bursa.publicaBounty("Santino D'Antonio", 150000, 9);
+
+    bursa.afiseazaCeleMaiCautateTinte();
+
+    bursa.proceseazaRecompensa(john, 0);
+
+    bursa.suplimenteazaFonduri(10000);
+    bursa.genereazaStatisticiBursa();
+
+    std::cout << "Info Bursa: " << bursa << std::endl;
+    std::cout << "Sediu: " << bursa.getSediu() << " | Contracte: " << bursa.getNumarContracte() << std::endl;
+
+    bursa.anuleazaBounty("Santino D'Antonio");
 
     return 0;
 }

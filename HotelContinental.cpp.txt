@@ -1,4 +1,4 @@
-#include "HotelContinental.h"
+#include "HotelContinental.cpp.h"
 #include <iostream>
 #include <algorithm>
 

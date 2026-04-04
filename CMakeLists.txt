@@ -51,16 +51,16 @@ include(cmake/CopyHelper.cmake)
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
     main.cpp
-        Arma.cpp
-        Arma.h
-        Asasin.cpp
-        Asasin.h
-        HotelContinental.cpp
-        HotelContinental.h
-        Misiune.cpp
-        Misiune.h
-        ConsiliuInalt.cpp
-        ConsiliuInalt.h
+        Arma.cpp.txt
+        Arma.cpp.h.txt
+        Asasin.cpp.txt
+        Asasin.cpp.h.txt
+        HotelContinental.cpp.txt
+        HotelContinental.cpp.h.txt
+        Misiune.cpp.txt
+        Misiune.cpp.h.txt
+        ConsiliuInalt.cpp.txt
+        ConsiliuInalt.cpp.h.txt
 )
 target_sources(${MAIN_EXECUTABLE_NAME}
     PRIVATE

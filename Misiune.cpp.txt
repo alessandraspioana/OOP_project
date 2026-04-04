@@ -1,4 +1,4 @@
-#include "Misiune.h"
+#include "Misiune.cpp.h"
 #include <iostream>
 
 Misiune::Misiune(const std::string& desc, int dif, int bani) 

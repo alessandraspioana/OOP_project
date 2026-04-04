@@ -2,7 +2,7 @@
 // Created by aless on 4/2/2026.
 //
 
-#include "Arma.h"
+#include "Arma.cpp.h"
 
 Arma::Arma(const std::string& model_, int cap_)
     : model{model_}, gloante{cap_}, capacitateMagazie{cap_}, uzura{0.0} {}

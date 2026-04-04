@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "Asasin.h"
-#include "Misiune.h"
+#include "Misiune.cpp.h.txt"
 
 class HotelContinental {
 private:

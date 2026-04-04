@@ -9,7 +9,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Arma.h"
+#include "Arma.cpp.h.txt"
 
 class Asasin {
 private:

@@ -575,7 +575,7 @@ int main() {
     std::cout << "Misiune: " << m1.getDescriere() << " | Gold: " << m1.getRecompensa() << " | Gata: " << m1.esteFinalizata() << std::endl;
     std::cout << "Info: " << m1 << std::endl;
 
-    Asasin john("John Wick", 100, glock);
+    Asasin john(numeAsasin, hp, glock);
     Asasin cassian("Cassian", 100, glock);
 
     Asasin copie = john;

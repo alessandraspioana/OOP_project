@@ -164,17 +164,17 @@ public:
     }
     }
 
-    void adaugaDistinctie(const std::string numeDistinctie) {
+    void adaugaDistinctie(const std::string& numeDistinctie) {
     this->distinctii.push_back(std::move(numeDistinctie));
     }
 
-    void colecteazaItem(const std::string item) {
+    void colecteazaItem(const std::string& item) {
     if (this->inventar.size() < 5) {
         this->inventar.push_back(std::move(item));
     }
     }
 
-    void folosesteItem(const std::string item) {
+    void folosesteItem(const std::string& item) {
     auto it = std::find(this->inventar.begin(), this->inventar.end(), item);
     if (it != this->inventar.end()) {
         if (item == "Trusa") {

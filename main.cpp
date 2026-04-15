@@ -48,6 +48,10 @@ public:
         os << a.model << " [" << a.gloante << "/" << a.capacitateMagazie << "]";
         return os;
     }
+
+    ~Arma() {
+
+    };
 };
 
 class Misiune {
@@ -86,6 +90,10 @@ public:
         os << m.descriere << " (Gold: " << m.recompensaGold << ")";
         return os;
     }
+
+    ~Misiune() {
+
+    };
 };
 
 class Asasin {
@@ -219,6 +227,9 @@ public:
         os << as.nume << " (HP: " << as.viata << ")";
         return os;
     }
+    ~Asasin() {
+
+    }
     };
 
 class SistemSecuritate {
@@ -271,6 +282,10 @@ public:
            << " | Incidente: " << s.istoricIncidente.size() << "]";
         return os;
     }
+
+    ~SistemSecuritate() {
+
+    };
 };
 
 class HotelContinental {
@@ -376,6 +391,10 @@ public:
         os << "  L " << h.securitate; // Apelam operator<< al obiectului 'securitate'
         return os;
     }
+
+    ~HotelContinental() {
+
+    };
 };
 
 class ConsiliuInalt {
@@ -451,6 +470,9 @@ public:
         return os;
     }
 
+    ~ConsiliuInalt() {
+
+    };
 };
 
 class BursaAsasinilor {
@@ -548,6 +570,10 @@ public:
         os << "Bursa Asasinilor (" << b.sediuCentral << ") - Fonduri: " << b.fondTotalPremii;
         return os;
     }
+
+    ~BursaAsasinilor() {
+
+    };
 };
 
 
@@ -556,9 +582,14 @@ int main() {
     std::string numeModel, numeAsasin;
     int capacitate, hp;
 
+    std::cout << "Introduceti model arma, capacitate, nume asasin si HP (se incearca mai intai citirea din fisier) : " << std::endl;
     if (!(std::cin >> numeModel >> capacitate >> numeAsasin >> hp)) {
         numeModel = "Glock"; capacitate = 10; numeAsasin = "John Wick"; hp = 100;
     }
+    std::cout << "Model: " << numeModel << std::endl;
+    std::cout << "Capacitate: " << capacitate << std::endl;
+    std::cout << "Nume asasin: " << numeAsasin << std::endl;
+    std::cout << "HP: " << hp << std::endl;
 
     Arma glock(numeModel, capacitate);
     glock.reincarca(5);

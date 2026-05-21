@@ -242,6 +242,8 @@ int main() {
     if (consiliu.contineCuvantInCodex("pamant")) {
         std::cout << "[AUDIT CODEX] S-a gasit clauza de imunitate teritoriala.\n";
     }
+
+
     std::cout << "===================================================================\n";
 
 

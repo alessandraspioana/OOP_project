@@ -7,8 +7,12 @@
 #include <algorithm>
 #include <iostream>
 
+
 SistemSecuritate::SistemSecuritate(int alertaInitiala)
-        : nivelAlerta(alertaInitiala), scanereActive(false) {}
+    : nivelAlerta{alertaInitiala}, scanereActive{false} {
+
+    this->ruleazaDiagnosticSenzori();
+}
 
 void SistemSecuritate::inregistreazaIncident(const std::string& tip, const std::string& detalii) {
     std::string intrareLog = "[" + tip + "] " + detalii;
@@ -87,3 +91,4 @@ int SistemSecuritate::getFrecventaIncident(std::string_view tip) const {
     }
     return 0;
 }
+

@@ -220,6 +220,30 @@ int main() {
     m1.eliminaCerinteInvalide();
     std::cout << "[C++ OPTIMIZATION] Cerinte complexe ramase: " << m1.getNumarCerinteComplexe() << "\n";
 
+    std::cout << "\n========== RUN SIMULATOR AVANSAT SECURITATE (C++ DENSE) ==========\n";
+    SistemSecuritate testSec2(1);
+
+    testSec2.adaugaSenzorPerimetral("Lobby Principal", "Senzor Miscare Laser");
+    testSec2.adaugaSenzorPerimetral("Seif Central", "Scaner Biometric");
+    testSec2.adaugaSenzorPerimetral("Acoperis Heliport", "Camera Infrarosiu");
+
+    testSec2.inregistreazaIncident("CRITIC", "Tentativa de patrundere neautorizata detectata pe heliport.");
+    testSec2.inregistreazaIncident("DUEL", "Zgomot de focuri de arma in zona restaurantului.");
+    testSec2.inregistreazaIncident("MINOR", "Senzor lobby desincronizat temporar.");
+
+    testSec2.simuleazaScanareCompleta();
+    std::string raportSec = testSec2.genereazaRaportSecuritateCurent();
+    std::cout << raportSec;
+
+    std::cout << "Frecventa incidente critice: " << testSec2.getFrecventaIncident("CRITIC") << "\n";
+
+    consiliu.ruleazaAuditTehnicSisteme();
+    std::cout << "[AUDIT CODEX] Reguli de maxima severitate gasite: " << consiliu.calculeazaNumarReguliSevere() << "\n";
+    if (consiliu.contineCuvantInCodex("pamant")) {
+        std::cout << "[AUDIT CODEX] S-a gasit clauza de imunitate teritoriala.\n";
+    }
+    std::cout << "===================================================================\n";
+
 
 
     return 0;

@@ -199,6 +199,8 @@ int main() {
     asasinTech->instaleazaUpgradeTehnologic("Modul_Satelit_AI", 1.8);
     asasinTech->comutaProtocolSecuritate();
 
+    asasinTech->incarcaBaterieGadget(20);
+
     if (asasinTech->detineUpgrade("Modul_Satelit_AI")) {
         std::cout << "[VALIDARE] Modulul AI este activ si functional.\n";
     }
@@ -206,5 +208,7 @@ int main() {
 
     hotel.simuleazaNoapteInHotel();
     std::cout << "===============================================================\n";
+
+
     return 0;
 }

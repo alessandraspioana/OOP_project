@@ -11,7 +11,7 @@
       stats{0, 0, 100000} {
     }
 
-    void ConsiliuInalt::adaugaHotel(HotelContinental h) {
+void ConsiliuInalt::adaugaHotel(HotelContinental h) {
         this->reteaHoteliera.push_back(std::move(h));
         this->stats.totalAsasini += 1;
         this->stats.misiuniCompletate += 0;

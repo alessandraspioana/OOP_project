@@ -58,6 +58,12 @@ add_executable(${MAIN_EXECUTABLE_NAME}
             src/HotelContinental.cpp
             src/ConsiliuInalt.cpp
             src/BursaAsasinilor.cpp
+        include/AsasinElite.h
+        src/AsasinElite.cpp
+        include/AsasinInfiltrat.h
+        src/AsasinInfiltrat.cpp
+        include/AsasinBountyHunter.h
+        src/AsasinBountyHunter.cpp
 )
 target_sources(${MAIN_EXECUTABLE_NAME}
     PRIVATE

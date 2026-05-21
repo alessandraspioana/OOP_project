@@ -1,96 +1,97 @@
-//
-// Created by aless on 4/18/2026.
-//
-
+// HotelContinental.cpp
 #include "HotelContinental.h"
-
+#include <iostream>
 #include <algorithm>
-#include <Asasin.h>
 
-void HotelContinental::aprovizionareSeif(int suma) { seifGold += suma; }
+HotelContinental::HotelContinental(std::string oras_, int goldInitial)
+    : oras{std::move(oras_)}, seifGold{goldInitial}, securitate{1} {}
 
-    HotelContinental::HotelContinental(std::string oras_, int goldInitial)
-        : oras{std::move(oras_)},
-          seifGold{goldInitial},
-          securitate{1} {
+void HotelContinental::aprovizionareSeif(int suma) {
+    this->seifGold += suma;
+    std::cout << "[HOTEL] S-au adaugat " << suma << " monede de aur in seiful din " << oras << ".\n";
+}
+
+void HotelContinental::cazeaza(std::unique_ptr<Asasin> a) {
+    if (a) {
+        std::cout << "[HOTEL] Asasinul " << a->getNume() << " s-a cazat in " << oras << ".\n";
+        oaspeti.push_back(std::move(a));
     }
+}
 
-    void HotelContinental::cazeaza(const Asasin& a) {
-        securitate.inregistreazaIncident("ADMIN", "Cazare noua: " + a.getNume());
-        this->oaspeti.push_back(a);
-    }
-
-    void HotelContinental::organizeazaDuel(size_t idx1, size_t idx2) {
-        if (idx1 < this->oaspeti.size() && idx2 < this->oaspeti.size()) {
-            securitate.inregistreazaIncident("VIOLENTA", "Duel intre " + oaspeti[idx1].getNume() + " si " + oaspeti[idx2].getNume());
-            this->oaspeti[idx1].ataca(this->oaspeti[idx2]);
+void HotelContinental::afiseazaRegistru() const {
+    std::cout << "\n=== REGISTRU OASPETI " << oras << " ===\n";
+    if (oaspeti.empty()) {
+        std::cout << "  Niciun oaspete inregistrat.\n";
+    } else {
+        for (const auto& oaspete : oaspeti) {
+            std::cout << "  * " << *oaspete << "\n";
         }
     }
+    std::cout << "====================================\n";
+}
 
-    void HotelContinental::evacueazaDecedatii() {
-        this->oaspeti.erase(
-            std::remove_if(this->oaspeti.begin(), this->oaspeti.end(),
-                [this](const Asasin& a) {
-                    if (!a.esteInViata()) {
-                        securitate.inregistreazaIncident("CURATENIE", "Evacuare corp: " + a.getNume());
-                        return true;
-                    }
-                    return false;
-                }),
-            this->oaspeti.end()
-        );
+void HotelContinental::organizeazaDuel(size_t idx1, size_t idx2) {
+    if (idx1 < oaspeti.size() && idx2 < oaspeti.size()) {
+        std::cout << "\n[DUEL] Pe pamantul sacru din " << oras << " se infrunta: "
+                  << oaspeti[idx1]->getNume() << " si " << oaspeti[idx2]->getNume() << "\n";
+
+        oaspeti[idx1]->executaAbilitateSpeciala();
+        oaspeti[idx2]->executaAbilitateSpeciala();
+
+        oaspeti[idx1]->ataca(*oaspeti[idx2]);
+
+        securitate.inregistreazaIncident("DUEL", oaspeti[idx1]->getNume() + " l-a atacat pe " + oaspeti[idx2]->getNume());
+    } else {
+        std::cout << "[DUEL] Indici invalizi pentru duel.\n";
     }
+}
 
-    void HotelContinental::adaugaMisiune(Misiune m) {
-        this->avizierMisiuni.push_back(std::move(m));
-    }
-
-    void HotelContinental::executaContract(size_t idxAsasin, size_t idxMisiune) {
-        if (idxAsasin < this->oaspeti.size() && idxMisiune < this->avizierMisiuni.size()) {
-            if (this->avizierMisiuni[idxMisiune].poateFiExecutata(this->oaspeti[idxAsasin].getNivel())) {
-                securitate.inregistreazaIncident("CONTRACT", oaspeti[idxAsasin].getNume() + " a finalizat o misiune.");
-                this->avizierMisiuni[idxMisiune].finalizeaza();
-                this->seifGold -= this->avizierMisiuni[idxMisiune].getRecompensa();
-            }
-        }
-    }
-
-    void HotelContinental::afiseazaRegistru() const {
-        std::cout << "--- Registru Hotel " << this->oras << " ---" << std::endl;
-        for (const auto& as : this->oaspeti) {
-            std::cout << " * " << as << std::endl;
-        }
-    }
-
-    void HotelContinental::afiseazaAvizier() const {
-        std::cout << "--- Avizier Hotel " << this->oras << " ---" << std::endl;
-        for (const auto& ms : this->avizierMisiuni) {
-            std::cout << " ! " << ms << std::endl;
-        }
-    }
-
-    void HotelContinental::simuleazaNoapteInHotel() {
-        std::cout << "\n[EVENT] Noaptea cade peste hotelul din " << this->oras << "..." << std::endl;
-
-        if (securitate.esteIzolat()) {
-            std::cout << " > HOTELUL ESTE IZOLAT. Masuri stricte de paza." << std::endl;
-        }
-
-        if (this->oaspeti.empty()) {
-            std::cout << " > Hotelul este pustiu. Liniste deplina." << std::endl;
-            return;
-        }
-
-        for (auto& as : this->oaspeti) {
-            if (as.getViata() < 50) {
-                std::cout << " > " << as.getNume() << " primeste ingrijiri medicale de urgenta." << std::endl;
-                as.folosesteItem("Trusa");
+void HotelContinental::executaContract(size_t idxAsasin, size_t idxMisiune) {
+    if (idxAsasin < oaspeti.size() && idxMisiune < avizierMisiuni.size()) {
+        if (!avizierMisiuni[idxMisiune].esteFinalizata()) {
+            if (avizierMisiuni[idxMisiune].poateFiExecutata(oaspeti[idxAsasin]->getNivel())) {
+                std::cout << "[CONTRACT] " << oaspeti[idxAsasin]->getNume()
+                          << " a finalizat cu succes: " << avizierMisiuni[idxMisiune].getDescriere() << "\n";
+                oaspeti[idxAsasin]->cresteExperienta(100);
+                avizierMisiuni[idxMisiune].finalizeaza();
+                seifGold -= avizierMisiuni[idxMisiune].getRecompensa();
             } else {
-                std::cout << " > " << as.getNume() << " se odihneste. Recuperare usoara." << std::endl;
-                as.primesteDamage(-5);
+                std::cout << "[CONTRACT] Nivel prea mic pentru acest contract!\n";
             }
+        } else {
+            std::cout << "[CONTRACT] Misiunea este deja finalizata.\n";
         }
-
-        this->seifGold += 100;
-        std::cout << " > Taxe de noapte colectate. Seif nou: " << this->seifGold << std::endl;
     }
+}
+
+void HotelContinental::evacueazaDecedatii() {
+    size_t initial = oaspeti.size();
+    oaspeti.erase(
+        std::remove_if(oaspeti.begin(), oaspeti.end(),
+                       [](const std::unique_ptr<Asasin>& a) { return !a->esteInViata(); }),
+        oaspeti.end()
+    );
+    size_t curent = oaspeti.size();
+    if (initial > curent) {
+        std::cout << "[HOTEL] Au fost evacuati " << (initial - curent) << " asasini cazuti la datorie.\n";
+    }
+}
+
+void HotelContinental::adaugaMisiune(Misiune m) {
+    avizierMisiuni.push_back(std::move(m));
+}
+
+void HotelContinental::afiseazaAvizier() const {
+    std::cout << "\n=== AVIZIER MISIUNI " << oras << " ===\n";
+    for (const auto& m : avizierMisiuni) {
+        std::cout << "  - " << m << "\n";
+    }
+    std::cout << "====================================\n";
+}
+
+void HotelContinental::simuleazaNoapteInHotel() {
+    std::cout << "\n[NOAPTE] Se asterne linistea peste " << oras << ". Asasinii se pregatesc...\n";
+    for (const auto& oaspete : oaspeti) {
+        oaspete->executaAbilitateSpeciala();
+    }
+}

@@ -17,6 +17,7 @@
 #include "HotelContinental.h"
 #include "ConsiliuInalt.h"
 #include "BursaAsasinilor.h"
+#include "ExceptiiHotel.h"
 
 int main() {
 
@@ -150,6 +151,21 @@ int main() {
     std::cout << "Instantiere noua: " << *asasinInfiltratSpecial << "\n";
     asasinInfiltratSpecial->executaAbilitateSpeciala();
 
+    std::cout << "=========================================================\n";
+
+    std::cout << "\n========== TESTARE EXEMPTII CUSTOM ==========\n";
+    try {
+        std::cout << "Incercam sa executam un contract foarte scump...\n";
+        Misiune misiuneImposibila("Eliminare Tinta Suprema", 1, 999999);
+        hotel.adaugaMisiune(misiuneImposibila);
+
+        hotel.executaContract(0, 1);
+
+    } catch (const ContinentalException& e) {
+        std::cout << ">>> Catch blocat cu succes! Mesaj exceptie Continental: " << e.what() << "\n";
+    } catch (const std::exception& e) {
+        std::cout << ">>> Catch general: " << e.what() << "\n";
+    }
     std::cout << "=========================================================\n";
 
     return 0;

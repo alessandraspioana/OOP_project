@@ -46,20 +46,24 @@ void HotelContinental::organizeazaDuel(size_t idx1, size_t idx2) {
     }
 }
 
+// In HotelContinental.cpp
+#include "ExceptiiHotel.h" // Adauga acest include sus de tot!
+
 void HotelContinental::executaContract(size_t idxAsasin, size_t idxMisiune) {
     if (idxAsasin < oaspeti.size() && idxMisiune < avizierMisiuni.size()) {
         if (!avizierMisiuni[idxMisiune].esteFinalizata()) {
+
+            if (seifGold < avizierMisiuni[idxMisiune].getRecompensa()) {
+                throw InsufficientGoldException(avizierMisiuni[idxMisiune].getRecompensa(), seifGold);
+            }
+
             if (avizierMisiuni[idxMisiune].poateFiExecutata(oaspeti[idxAsasin]->getNivel())) {
                 std::cout << "[CONTRACT] " << oaspeti[idxAsasin]->getNume()
                           << " a finalizat cu succes: " << avizierMisiuni[idxMisiune].getDescriere() << "\n";
                 oaspeti[idxAsasin]->cresteExperienta(100);
                 avizierMisiuni[idxMisiune].finalizeaza();
                 seifGold -= avizierMisiuni[idxMisiune].getRecompensa();
-            } else {
-                std::cout << "[CONTRACT] Nivel prea mic pentru acest contract!\n";
             }
-        } else {
-            std::cout << "[CONTRACT] Misiunea este deja finalizata.\n";
         }
     }
 }

@@ -40,6 +40,9 @@ public:
         return os;
     }
     friend std::ostream& operator<<(std::ostream& os, const ConsiliuInalt& c);
+    void ruleazaAuditTehnicSisteme() const;
+    [[nodiscard]] size_t calculeazaNumarReguliSevere() const;
+    [[nodiscard]] bool contineCuvantInCodex(std::string_view cuvant) const;
 
 };
 

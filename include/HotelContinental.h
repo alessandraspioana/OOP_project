@@ -42,6 +42,15 @@ public:
 
     void oferaMisiuneSecretaDeInfiltrare(size_t idxAsasin);
     void sorteazaOaspetiDupaNivel();
+
+
+    HotelContinental(const HotelContinental&) = delete;
+    HotelContinental& operator=(const HotelContinental&) = delete;
+
+    HotelContinental(HotelContinental&& other) noexcept = default;
+    HotelContinental& operator=(HotelContinental&& other) noexcept = default;
+
+    ~HotelContinental() = default;
 };
 
 #endif //OOP_HOTELCONTINENTAL_H

@@ -3,20 +3,28 @@
 //
 
 #include "SistemSecuritate.h"
-
+#include <sstream>
+#include <algorithm>
 #include <iostream>
 
+
 SistemSecuritate::SistemSecuritate(int alertaInitiala)
-        : nivelAlerta(alertaInitiala), scanereActive(false) {}
+    : nivelAlerta{alertaInitiala}, scanereActive{false} {
+
+    this->ruleazaDiagnosticSenzori();
+}
 
 void SistemSecuritate::inregistreazaIncident(const std::string& tip, const std::string& detalii) {
-    std::string entry = "[" + tip + "] " + detalii;
-    istoricIncidente.push_back(entry);
+    std::string intrareLog = "[" + tip + "] " + detalii;
+    this->istoricIncidente.push_back(intrareLog);
 
-    if (tip == "VIOLENTA" && nivelAlerta < 5) {
-        nivelAlerta++;
+    this->frecventaIncidentePeTip[tip]++;
+
+    if (tip == "CRITIC" || tip == "DUEL") {
+        this->nivelAlerta += 2;
+        this->scanereActive = true;
     }
-    autoCalibrare();
+    this->autoCalibrare();
 }
 
 void SistemSecuritate::resetAlerta() {
@@ -42,3 +50,45 @@ void SistemSecuritate::autoCalibrare() {
         scanereActive = false;
     }
 }
+
+void SistemSecuritate::ruleazaDiagnosticSenzori() {
+    std::cout << "[SISTEM] Se ruleaza analizatorul hardware de retea...\n";
+    for (auto& [zona, stare] : bazaDateSenzori) {
+        stare = "OPERATIONAL";
+    }
+}
+
+void SistemSecuritate::adaugaSenzorPerimetral(std::string_view zona, std::string_view tipSenzor) {
+    this->bazaDateSenzori.push_back(std::make_pair(std::string(zona), std::string(tipSenzor)));
+}
+
+void SistemSecuritate::simuleazaScanareCompleta() const {
+    std::cout << "--- Incepe scanarea termica a perimetrului Continental ---\n";
+    std::for_each(bazaDateSenzori.begin(), bazaDateSenzori.end(), [](const auto& senzor) {
+        std::cout << " > Senzor amplasat in zona: " << senzor.first << " | Status: " << senzor.second << "\n";
+    });
+}
+
+std::string SistemSecuritate::genereazaRaportSecuritateCurent() const {
+    std::stringstream bufferRaport;
+    bufferRaport << "\n======= RAPORT DIGITAL DE SECURITATE =======\n";
+    bufferRaport << "Nivel Alerta curent: " << nivelAlerta << "\n";
+    bufferRaport << "Stare scanere: " << (scanereActive ? "ONLINE" : "OFFLINE") << "\n";
+    bufferRaport << "Total senzori monitorizati: " << bazaDateSenzori.size() << "\n";
+    bufferRaport << "--- Centralizator tipuri de incidente ---\n";
+
+    for (const auto& [tip, numar] : frecventaIncidentePeTip) {
+        bufferRaport << "  * Categoria [" << tip << "] -> aparitii: " << numar << "\n";
+    }
+    bufferRaport << "============================================\n";
+    return bufferRaport.str();
+}
+
+int SistemSecuritate::getFrecventaIncident(std::string_view tip) const {
+    auto it = frecventaIncidentePeTip.find(std::string(tip));
+    if (it != frecventaIncidentePeTip.end()) {
+        return it->second;
+    }
+    return 0;
+}
+

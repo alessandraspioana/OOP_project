@@ -3,6 +3,8 @@
 //
 
 #include "ConsiliuInalt.h"
+
+#include <algorithm>
 #include <Asasin.h>
 
 
@@ -56,3 +58,20 @@ void ConsiliuInalt::adaugaHotel(HotelContinental h) {
         std::cout << "Upgrade activat de " << this->lider << std::endl;
     }
 
+void ConsiliuInalt::ruleazaAuditTehnicSisteme() const {
+        std::cout << "\n[CONSILIU] Adjudecatorul a pornit inspectia tehnica a retelei hoteliere.\n";
+        std::cout << "Se verifica un numar de " << reteaHoteliera.size() << " locatii din subordine.\n";
+    }
+
+size_t ConsiliuInalt::calculeazaNumarReguliSevere() const {
+        // Numaram regulile din codex care contin cuvinte de restrictie severe (ex: "Nicio", "Pedeapsa", "Sange")
+        return std::count_if(reguliCodex.begin(), reguliCodex.end(), [](const std::string& regula) {
+            return regula.find("Nicio") != std::string::npos || regula.find("Pedeapsa") != std::string::npos;
+        });
+    }
+
+bool ConsiliuInalt::contineCuvantInCodex(std::string_view cuvant) const {
+        return std::any_of(reguliCodex.begin(), reguliCodex.end(), [cuvant](const std::string& regula) {
+            return regula.find(cuvant) != std::string::npos;
+        });
+    }

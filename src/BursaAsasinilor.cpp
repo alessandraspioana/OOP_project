@@ -4,6 +4,7 @@
 
 #include "BursaAsasinilor.h"
 #include <iomanip>
+#include <algorithm>
 
     [[nodiscard]] size_t BursaAsasinilor::getNumarContracte() const { return contracteDeschise.size(); }
     [[nodiscard]] const std::string& BursaAsasinilor::getSediu() const { return sediuCentral; }
@@ -78,4 +79,17 @@
     void BursaAsasinilor::suplimenteazaFonduri(int suma) {
         this->fondTotalPremii += suma;
         std::cout << "[BURSA] Fonduri suplimentate cu " << suma << ". Total: " << this->fondTotalPremii << std::endl;
+    }
+
+std::vector<std::string> BursaAsasinilor::filtreazaContractePericuloase(int riscMinim) const {
+        std::vector<std::string> rezultate;
+
+        // Parcurgem structura internă folosind range-based for loop din C++
+        for (const auto& contract : contracteDeschise) {
+            if (contract.esteActiv && contract.periculozitate >= riscMinim) {
+                rezultate.push_back(contract.numeTinta);
+            }
+        }
+
+        return rezultate;
     }

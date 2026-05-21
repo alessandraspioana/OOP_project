@@ -3,6 +3,8 @@
 //
 
 #include "Misiune.h"
+
+#include <algorithm>
 #include <iostream>
 
 [[nodiscard]] int Misiune::getRecompensa() const { return recompensaGold; }
@@ -31,4 +33,28 @@ void Misiune::finalizeaza() {
 std::ostream& operator<<(std::ostream& os, const Misiune& m) {
     os << m.descriere << " (Gold: " << m.recompensaGold << ")";
     return os;
+}
+
+bool Misiune::areCerintaInclusa(std::string_view textCerinta) const {
+    return std::any_of(cerinte.begin(), cerinte.end(),
+        [textCerinta](const std::string& c) {
+            return c == textCerinta;
+        });
+}
+
+void Misiune::eliminaCerinteInvalide() {
+    cerinte.erase(
+        std::remove_if(cerinte.begin(), cerinte.end(),
+            [](const std::string& c) {
+                return c.empty() || c.length() < 3;
+            }),
+        cerinte.end()
+    );
+}
+
+size_t Misiune::getNumarCerinteComplexe() const {
+    return std::count_if(cerinte.begin(), cerinte.end(),
+        [](const std::string& c) {
+            return c.find(' ') != std::string::npos;
+        });
 }

@@ -27,6 +27,7 @@ private:
 
 public:
 
+    [[nodiscard]] std::vector<std::string> filtreazaContractePericuloase(int riscMinim) const;
     [[nodiscard]] size_t getNumarContracte() const;
     [[nodiscard]] const std::string& getSediu() const;
     explicit BursaAsasinilor(std::string sediu, int fondInitial);

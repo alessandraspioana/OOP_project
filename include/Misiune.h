@@ -24,7 +24,9 @@ public:
     bool poateFiExecutata(int nivelAsasin) const;
     void finalizeaza();
     friend std::ostream& operator<<(std::ostream& os, const Misiune& m);
-
+    bool areCerintaInclusa(std::string_view textCerinta) const;
+    void eliminaCerinteInvalide();
+    [[nodiscard]] size_t getNumarCerinteComplexe() const;
 };
 
 

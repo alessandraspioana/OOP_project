@@ -31,6 +31,10 @@ void Arma::reincarca(int amunitie) {
     if (this->gloante > this->capacitateMagazie) {
         this->gloante = this->capacitateMagazie;
     }
+    istoricIncarcari.push_back(amunitie);
+    if (istoricIncarcari.size() > 5) {
+        istoricIncarcari.pop_front();
+    }
 }
 
 void Arma::curataArma() {
@@ -43,5 +47,13 @@ int Arma::getGloante() const { return gloante; }
 std::ostream& operator<<(std::ostream& os, const Arma& a) {
     os << a.model << " [" << a.gloante << "/" << a.capacitateMagazie << "]";
     return os;
+}
+
+void Arma::afiseazaIstoricMunitie() const {
+    std::cout << "[LOG ARMA] Istoric ultimele incarcari: ";
+    for (int cantitate : istoricIncarcari) {
+        std::cout << "+" << cantitate << " ";
+    }
+    std::cout << "\n";
 }
 

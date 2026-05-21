@@ -2,6 +2,10 @@
 #include "HotelContinental.h"
 #include <iostream>
 #include <algorithm>
+#include <sstream>
+
+#include "AsasinInfiltrat.h"
+
 
 HotelContinental::HotelContinental(std::string oras_, int goldInitial)
     : oras{std::move(oras_)}, seifGold{goldInitial}, securitate{1} {}
@@ -105,5 +109,38 @@ int HotelContinental::calculeazaNumarAsasiniVeterani() const {
     return std::count_if(oaspeti.begin(), oaspeti.end(),
         [](const std::unique_ptr<Asasin>& a) {
             return a->getNivel() >= 2;
+        });
+}
+
+void HotelContinental::oferaMisiuneSecretaDeInfiltrare(size_t idxAsasin) {
+    if (idxAsasin >= oaspeti.size()) {
+        std::cout << "[CONGRES] Index oaspete invalid.\n";
+        return;
+    }
+
+    auto* infiltrat = dynamic_cast<AsasinInfiltrat*>(oaspeti[idxAsasin].get());
+
+    std::stringstream logStream;
+
+    if (infiltrat != nullptr) {
+        logStream << "\n[MISIUNE SECRETA] Succes! Asasinul " << infiltrat->getNume()
+                  << " a fost validat polimorfic ca agent infiltrat.\n";
+        std::cout << logStream.str();
+
+        infiltrat->executaAbilitateSpeciala();
+    } else {
+        logStream << "\n[MISIUNE SECRETA] Diagnostic: Downcast esuat. Asasinul "
+                  << oaspeti[idxAsasin]->getNume() << " nu este un infiltrat autentic.\n";
+        std::cout << logStream.str();
+    }
+}
+
+void HotelContinental::sorteazaOaspetiDupaNivel() {
+    std::cout << "\n[HOTEL] Se executa sortarea interna a oaspetilor utilizand algoritmi STL...\n";
+
+    std::sort(oaspeti.begin(), oaspeti.end(),
+        [](const std::unique_ptr<Asasin>& a, const std::unique_ptr<Asasin>& b) {
+            if (a == nullptr || b == nullptr) return false;
+            return a->getNivel() > b->getNivel(); // Sortare descrescătoare
         });
 }

@@ -177,5 +177,19 @@ int main() {
     std::cout << "[STL] Numar de asasini veterani ramasi in Hotel Continental: " << veterani << "\n";
 
     std::cout << "=========================================================\n";
+
+    std::cout << "\n========== TESTARE DYNAMIC_CAST SI OPERATII C++ ==========\n";
+
+    std::cout << "-- Evaluare downcast pentru index 0 (Elite) --\n";
+    hotel.oferaMisiuneSecretaDeInfiltrare(0);
+
+    std::cout << "\n-- Evaluare downcast pentru index 1 (Infiltrat) --\n";
+    hotel.oferaMisiuneSecretaDeInfiltrare(1);
+
+    hotel.sorteazaOaspetiDupaNivel();
+    std::cout << "\n[REGISTRU DUPA SORTARE STL]:";
+    hotel.afiseazaRegistru();
+
+    std::cout << "=========================================================\n";
     return 0;
 }

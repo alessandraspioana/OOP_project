@@ -39,6 +39,9 @@ public:
         os << "  L " << h.securitate;
         return os;
     }
+
+    void oferaMisiuneSecretaDeInfiltrare(size_t idxAsasin);
+    void sorteazaOaspetiDupaNivel();
 };
 
 #endif //OOP_HOTELCONTINENTAL_H

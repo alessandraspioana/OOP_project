@@ -10,6 +10,7 @@
 #include "Arma.h"
 #include "Misiune.h"
 #include "Asasin.h"
+#include "AsasinBazaSecreta.h"
 #include "AsasinElite.h"
 #include "AsasinInfiltrat.h"
 #include "AsasinBountyHunter.h"
@@ -191,5 +192,19 @@ int main() {
     hotel.afiseazaRegistru();
 
     std::cout << "=========================================================\n";
+
+    std::cout << "\n========== INTEGRARE AMPLA CLASA DERIVATA (C++ PRO) ==========\n";
+    auto asasinTech = std::make_unique<AsasinBazaSecreta>("High-Table Operative", 200, glock, "Drona Hawk-Eye v4");
+
+    asasinTech->instaleazaUpgradeTehnologic("Modul_Satelit_AI", 1.8);
+    asasinTech->comutaProtocolSecuritate();
+
+    if (asasinTech->detineUpgrade("Modul_Satelit_AI")) {
+        std::cout << "[VALIDARE] Modulul AI este activ si functional.\n";
+    }
+    hotel.cazeaza(std::move(asasinTech));
+
+    hotel.simuleazaNoapteInHotel();
+    std::cout << "===============================================================\n";
     return 0;
 }

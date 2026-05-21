@@ -65,6 +65,8 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/AsasinBountyHunter.h
         src/AsasinBountyHunter.cpp
         include/ExceptiiHotel.h
+        include/AsasinBazaSecreta.h
+        src/AsasinBazaSecreta.cpp
 )
 target_sources(${MAIN_EXECUTABLE_NAME}
     PRIVATE

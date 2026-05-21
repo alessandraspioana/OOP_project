@@ -1,17 +1,23 @@
+// main.cpp
 #include <iostream>
 #include <vector>
 #include <string>
 #include <algorithm>
 #include <iomanip>
 #include <utility>
+#include <memory>
 
 #include "Arma.h"
 #include "Misiune.h"
 #include "Asasin.h"
+#include "AsasinElite.h"
+#include "AsasinInfiltrat.h"
+#include "AsasinBountyHunter.h"
 #include "SistemSecuritate.h"
 #include "HotelContinental.h"
 #include "ConsiliuInalt.h"
 #include "BursaAsasinilor.h"
+
 int main() {
 
     std::string numeModel = "Glock", numeAsasin = "John Wick";
@@ -44,27 +50,29 @@ int main() {
     std::cout << "Misiune: " << m1.getDescriere() << " | Gold: " << m1.getRecompensa() << " | Gata: " << m1.esteFinalizata() << std::endl;
     std::cout << "Info: " << m1 << std::endl;
 
-    Asasin john(numeAsasin, hp, glock);
-    Asasin cassian("Cassian", 100, glock);
+    auto john = std::make_unique<AsasinElite>(numeAsasin, hp, glock, 2.5);
+    auto cassian = std::make_unique<AsasinInfiltrat>("Cassian", 100, glock, "Costum Elegant");
 
-    Asasin copie = john;
-    std::cout << "Copie: " << copie << std::endl;
-    copie = cassian;
-    std::cout << "Re-atribuire: " << copie << std::endl;
+    std::unique_ptr<Asasin> copie = john->clone();
+    std::cout << "Copie clonata polimorfic: " << *copie << std::endl;
+    
+    copie = cassian->clone();
+    std::cout << "Re-atribuire polimorfica: " << *copie << std::endl;
 
-    john.activeazaModInfiltrare();
-    john.colecteazaItem("Trusa");
-    john.folosesteItem("Trusa");
-    john.cresteExperienta(50);
-    john.adaugaDistinctie("Legenda");
-    john.antrenament();
-    john.afiseazaStatusComplet();
+    john->activeazaModInfiltrare();
+    john->colecteazaItem("Trusa");
+    john->folosesteItem("Trusa");
+    john->cresteExperienta(50);
+    john->adaugaDistinctie("Legenda");
+    john->antrenament();
+    john->afiseazaStatusComplet();
 
-    std::cout << "Nume: " << john.getNume() << " | LVL: " << john.getNivel() << " | HP: " << john.getViata() << " | Viu: " << john.esteInViata() << std::endl;
+    std::cout << "Nume: " << john->getNume() << " | LVL: " << john->getNivel() << " | HP: " << john->getViata() << " | Viu: " << john->esteInViata() << std::endl;
 
     HotelContinental hotel("NY", 10000);
-    hotel.cazeaza(john);
-    hotel.cazeaza(cassian);
+    
+    hotel.cazeaza(std::move(john));
+    hotel.cazeaza(std::move(cassian));
     hotel.adaugaMisiune(m1);
 
     hotel.organizeazaDuel(0, 1);
@@ -76,14 +84,16 @@ int main() {
     std::cout << "Info Hotel: " << hotel << std::endl;
 
     ConsiliuInalt consiliu("Adjudicator");
-    consiliu.adaugaHotel(hotel);
+    consiliu.adaugaHotel(std::move(hotel));
     consiliu.adaugaRegula("Nicio afacere pe pamant sacru");
     consiliu.afiseazaCodex();
     consiliu.finanteazaHotel(0, 1000);
     consiliu.genereazaRaportGlobal();
     consiliu.genereazaAuditFinanciar();
     consiliu.upgradeSecuritateGlobala();
-    consiliu.emiteExcommunicado(john);
+    
+    AsasinBountyHunter tracker("Tracker", 120, glock, 3);
+    consiliu.emiteExcommunicado(tracker);
 
     std::cout << "Status Consiliu: " << consiliu << std::endl;
 
@@ -93,7 +103,7 @@ int main() {
 
     bursa.afiseazaCeleMaiCautateTinte();
 
-    bursa.proceseazaRecompensa(john, 0);
+    bursa.proceseazaRecompensa(tracker, 0);
 
     bursa.suplimenteazaFonduri(10000);
     bursa.genereazaStatisticiBursa();
@@ -105,11 +115,10 @@ int main() {
 
     std::cout << "\n========== TESTARE SISTEM AVANSAT ==========\n";
 
-    john.cresteExperienta(500);
-    john.evalueazaTitluOnorific();
-    std::cout << "Rang John: " << john.getDescriereRang() << std::endl;
+    tracker.cresteExperienta(500);
+    tracker.evalueazaTitluOnorific();
+    std::cout << "Rang Tracker: " << tracker.getDescriereRang() << std::endl;
 
-    hotel.cazeaza(john);
     hotel.simuleazaNoapteInHotel();
 
     consiliu.genereazaAuditFinanciar();
@@ -130,6 +139,18 @@ int main() {
     testSec.resetAlerta();
 
     std::cout << "Sistem test: Nivel " << nivel << ", Izolare: " << std::boolalpha << izolat << std::endl;
+
+    std::cout << "\n========== DEMONSTRATIE METODE DERIVATE TEMA 2 ==========\n";
+    
+    auto asasinEliteSpecial = std::make_unique<AsasinElite>("Zero", 150, glock, 3.0);
+    std::cout << "Instantiere noua: " << *asasinEliteSpecial << "\n";
+    asasinEliteSpecial->executaAbilitateSpeciala();
+    
+    auto asasinInfiltratSpecial = std::make_unique<AsasinInfiltrat>("Sofi", 100, glock, "Manager Hotel");
+    std::cout << "Instantiere noua: " << *asasinInfiltratSpecial << "\n";
+    asasinInfiltratSpecial->executaAbilitateSpeciala();
+
+    std::cout << "=========================================================\n";
 
     return 0;
 }

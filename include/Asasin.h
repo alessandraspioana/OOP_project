@@ -9,6 +9,8 @@
 #include "Arma.h"
 
 class Asasin {
+private:
+    static int totalAsasiniInregistrati;
 protected:
     std::string nume;
     int viata;
@@ -48,6 +50,7 @@ public:
     void activeazaModInfiltrare();
     void afiseazaStatusComplet() const;
     void evalueazaTitluOnorific();
+    static int getTotalAsasiniInregistrati();
     [[nodiscard]] std::string getDescriereRang() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Asasin& as);

@@ -15,6 +15,7 @@ Asasin::Asasin(std::string nume_, int viata_, Arma arma_)
       experienta{0},
       nivel{1},
       arma{std::move(arma_)} {
+    totalAsasiniInregistrati++;
 }
 
 Asasin::Asasin(const Asasin& other)
@@ -129,4 +130,11 @@ std::ostream& operator<<(std::ostream& os, const Asasin& as) {
 
 void Asasin::afiseazaDetalii(std::ostream& os) const {
     os << "Arma: " << arma;
+}
+
+int Asasin::totalAsasiniInregistrati = 0;
+
+
+int Asasin::getTotalAsasiniInregistrati() {
+    return totalAsasiniInregistrati;
 }

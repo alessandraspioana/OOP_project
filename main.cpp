@@ -168,5 +168,14 @@ int main() {
     }
     std::cout << "=========================================================\n";
 
+    std::cout << "\n========== TESTARE METODE STATICE SI STL ==========\n";
+
+    std::cout << "[STATIC] Total asasini instantiati in rulare: "
+              << Asasin::getTotalAsasiniInregistrati() << "\n";
+
+    int veterani = hotel.calculeazaNumarAsasiniVeterani();
+    std::cout << "[STL] Numar de asasini veterani ramasi in Hotel Continental: " << veterani << "\n";
+
+    std::cout << "=========================================================\n";
     return 0;
 }

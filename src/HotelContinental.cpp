@@ -47,7 +47,8 @@ void HotelContinental::organizeazaDuel(size_t idx1, size_t idx2) {
 }
 
 // In HotelContinental.cpp
-#include "ExceptiiHotel.h" // Adauga acest include sus de tot!
+#include "ExceptiiHotel.h"
+#include <numeric>
 
 void HotelContinental::executaContract(size_t idxAsasin, size_t idxMisiune) {
     if (idxAsasin < oaspeti.size() && idxMisiune < avizierMisiuni.size()) {
@@ -98,4 +99,11 @@ void HotelContinental::simuleazaNoapteInHotel() {
     for (const auto& oaspete : oaspeti) {
         oaspete->executaAbilitateSpeciala();
     }
+}
+
+int HotelContinental::calculeazaNumarAsasiniVeterani() const {
+    return std::count_if(oaspeti.begin(), oaspeti.end(),
+        [](const std::unique_ptr<Asasin>& a) {
+            return a->getNivel() >= 2;
+        });
 }

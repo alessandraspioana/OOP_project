@@ -19,6 +19,7 @@ private:
     SistemSecuritate securitate;
 
 public:
+    [[nodiscard]] int calculeazaNumarAsasiniVeterani() const;
     explicit HotelContinental(std::string oras_, int goldInitial);
 
     void aprovizionareSeif(int suma);

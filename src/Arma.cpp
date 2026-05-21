@@ -3,6 +3,8 @@
 //
 
 #include "Arma.h"
+#include "ExceptiiHotel.h"
+
 #include <iostream>
 
 Arma::Arma(std::string model_, int cap_)
@@ -13,7 +15,10 @@ Arma::Arma(std::string model_, int cap_)
 }
 
 bool Arma::trage() {
-    if (gloante > 0 && !esteBlocata()) {
+    if (esteBlocata()) {
+        throw WeaponWeaponJamException(model);
+    }
+    if (gloante > 0) {
         gloante--;
         uzura += 0.02;
         return true;
@@ -39,3 +44,4 @@ std::ostream& operator<<(std::ostream& os, const Arma& a) {
     os << a.model << " [" << a.gloante << "/" << a.capacitateMagazie << "]";
     return os;
 }
+

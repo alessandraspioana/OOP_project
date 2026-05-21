@@ -4,6 +4,7 @@
 
 #ifndef OOP_ARMA_H
 #define OOP_ARMA_H
+#include <deque>
 #include <string>
 
 class Arma {
@@ -13,6 +14,7 @@ private:
     int gloante;
     int capacitateMagazie;
     double uzura;
+    std::deque<int> istoricIncarcari;
 public:
     explicit Arma(std::string model_ = "Glock", int cap_ = 10);
     bool trage();
@@ -21,6 +23,7 @@ public:
     bool esteBlocata() const;
     int getGloante() const;
     friend std::ostream& operator<<(std::ostream& os, const Arma& a);
+    void afiseazaIstoricMunitie() const;
 };
 
 

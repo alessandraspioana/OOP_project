@@ -55,6 +55,8 @@ int main() {
     auto john = std::make_unique<AsasinElite>(numeAsasin, hp, glock, 2.5);
     auto cassian = std::make_unique<AsasinInfiltrat>("Cassian", 100, glock, "Costum Elegant");
 
+    glock.afiseazaIstoricMunitie();
+
     std::unique_ptr<Asasin> copie = john->clone();
     std::cout << "Copie clonata polimorfic: " << *copie << std::endl;
     
@@ -115,6 +117,9 @@ int main() {
 
     bursa.anuleazaBounty("Santino D'Antonio");
 
+    std::vector<std::string> tinteGrele = bursa.filtreazaContractePericuloase(5);
+    std::cout << "[STL BURSA] S-au gasit " << tinteGrele.size() << " tinte de risc maxim in baza de date.\n";
+
     std::cout << "\n========== TESTARE SISTEM AVANSAT ==========\n";
 
     tracker.cresteExperienta(500);
@@ -142,7 +147,6 @@ int main() {
 
     std::cout << "Sistem test: Nivel " << nivel << ", Izolare: " << std::boolalpha << izolat << std::endl;
 
-    std::cout << "\n========== DEMONSTRATIE METODE DERIVATE TEMA 2 ==========\n";
     
     auto asasinEliteSpecial = std::make_unique<AsasinElite>("Zero", 150, glock, 3.0);
     std::cout << "Instantiere noua: " << *asasinEliteSpecial << "\n";
@@ -179,7 +183,7 @@ int main() {
 
     std::cout << "=========================================================\n";
 
-    std::cout << "\n========== TESTARE DYNAMIC_CAST SI OPERATII C++ ==========\n";
+    std::cout << "\n========== TESTARE DYNAMIC_CAST==========\n";
 
     std::cout << "-- Evaluare downcast pentru index 0 (Elite) --\n";
     hotel.oferaMisiuneSecretaDeInfiltrare(0);
@@ -208,6 +212,14 @@ int main() {
 
     hotel.simuleazaNoapteInHotel();
     std::cout << "===============================================================\n";
+
+    std::cout << "VERIFICAM CERINTELE ASASINILOR...";
+    if (m1.areCerintaInclusa("Silențios")) {
+        std::cout << "[C++ OPTIMIZATION] Cerinta speciala a fost validata prin std::any_of.\n";
+    }
+    m1.eliminaCerinteInvalide();
+    std::cout << "[C++ OPTIMIZATION] Cerinte complexe ramase: " << m1.getNumarCerinteComplexe() << "\n";
+
 
 
     return 0;

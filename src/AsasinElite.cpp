@@ -12,11 +12,22 @@ std::unique_ptr<Asasin> AsasinElite::clone() const {
 }
 
 void AsasinElite::executaAbilitateSpeciala() {
-    std::cout << "[Abilitate Elite] " << nume << " are o precizie chirurgicala. Multiplicator damage setat la " << multiplicatorDamage << "x!\n";
-    this->cresteExperienta(20);
+    std::cout << "\n[ELITE MECHANIC] " << nume << " isi recalculeaza vectorul de tragere.\n";
+
+    puncteCombo++;
+    if (puncteCombo >= limitaComboMax) {
+        std::cout << " > COMBO MAXIM ACTIVAT! " << nume << " executa un foc triplu devastator!\n";
+        this->multiplicatorDamage += 0.5;
+        this->arma.reincarca(3);
+        this->cresteExperienta(40);
+        puncteCombo = 0;
+    } else {
+        std::cout << " > Concentrare crescuta. Combo curent: " << puncteCombo << "/" << limitaComboMax << "\n";
+        this->cresteExperienta(10);
+    }
 }
 
 void AsasinElite::afiseazaDetalii(std::ostream& os) const {
     Asasin::afiseazaDetalii(os);
-    os << " [Mod: Elite | Multiplicator: " << multiplicatorDamage << "]";
+    os << " [Elite | Multiplicator: " << multiplicatorDamage << "x | Combo: " << puncteCombo << "]";
 }

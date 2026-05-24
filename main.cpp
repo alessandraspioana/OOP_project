@@ -52,14 +52,26 @@ int main() {
     std::cout << "Misiune: " << m1.getDescriere() << " | Gold: " << m1.getRecompensa() << " | Gata: " << m1.esteFinalizata() << std::endl;
     std::cout << "Info: " << m1 << std::endl;
 
+    //auto john = std::make_unique<AsasinElite>(numeAsasin, hp, glock, 2.5);
+    //auto cassian = std::make_unique<AsasinInfiltrat>("Cassian", 100, glock, "Costum Elegant");
+
     auto john = std::make_unique<AsasinElite>(numeAsasin, hp, glock, 2.5);
     auto cassian = std::make_unique<AsasinInfiltrat>("Cassian", 100, glock, "Costum Elegant");
+    auto tracker = std::make_unique<AsasinBountyHunter>("Tracker", 120, glock, 0);
 
-    glock.afiseazaIstoricMunitie();
+    tracker->adaugaTintaInUrmarire("Santino D'Antonio");
 
     std::unique_ptr<Asasin> copie = john->clone();
     std::cout << "Copie clonata polimorfic: " << *copie << std::endl;
-    
+
+    copie = cassian->clone();
+    std::cout << "Re-atribuire polimorfica: " << *copie << std::endl;
+
+
+    glock.afiseazaIstoricMunitie();
+
+    std::cout << "Copie clonata polimorfic: " << *copie << std::endl;
+
     copie = cassian->clone();
     std::cout << "Re-atribuire polimorfica: " << *copie << std::endl;
 
@@ -74,7 +86,7 @@ int main() {
     std::cout << "Nume: " << john->getNume() << " | LVL: " << john->getNivel() << " | HP: " << john->getViata() << " | Viu: " << john->esteInViata() << std::endl;
 
     HotelContinental hotel("NY", 10000);
-    
+
     hotel.cazeaza(std::move(john));
     hotel.cazeaza(std::move(cassian));
     hotel.adaugaMisiune(m1);
@@ -95,9 +107,8 @@ int main() {
     consiliu.genereazaRaportGlobal();
     consiliu.genereazaAuditFinanciar();
     consiliu.upgradeSecuritateGlobala();
-    
-    AsasinBountyHunter tracker("Tracker", 120, glock, 3);
-    consiliu.emiteExcommunicado(tracker);
+
+    consiliu.emiteExcommunicado(*tracker);
 
     std::cout << "Status Consiliu: " << consiliu << std::endl;
 
@@ -107,7 +118,7 @@ int main() {
 
     bursa.afiseazaCeleMaiCautateTinte();
 
-    bursa.proceseazaRecompensa(tracker, 0);
+    bursa.proceseazaRecompensa(*tracker, 0);
 
     bursa.suplimenteazaFonduri(10000);
     bursa.genereazaStatisticiBursa();
@@ -122,9 +133,9 @@ int main() {
 
     std::cout << "\n========== TESTARE SISTEM AVANSAT ==========\n";
 
-    tracker.cresteExperienta(500);
-    tracker.evalueazaTitluOnorific();
-    std::cout << "Rang Tracker: " << tracker.getDescriereRang() << std::endl;
+    tracker->cresteExperienta(500);
+    tracker->evalueazaTitluOnorific();
+    std::cout << "Rang Tracker: " << tracker->getDescriereRang() << std::endl;
 
     hotel.simuleazaNoapteInHotel();
 
@@ -147,11 +158,11 @@ int main() {
 
     std::cout << "Sistem test: Nivel " << nivel << ", Izolare: " << std::boolalpha << izolat << std::endl;
 
-    
+
     auto asasinEliteSpecial = std::make_unique<AsasinElite>("Zero", 150, glock, 3.0);
     std::cout << "Instantiere noua: " << *asasinEliteSpecial << "\n";
     asasinEliteSpecial->executaAbilitateSpeciala();
-    
+
     auto asasinInfiltratSpecial = std::make_unique<AsasinInfiltrat>("Sofi", 100, glock, "Manager Hotel");
     std::cout << "Instantiere noua: " << *asasinInfiltratSpecial << "\n";
     asasinInfiltratSpecial->executaAbilitateSpeciala();
@@ -197,7 +208,7 @@ int main() {
 
     std::cout << "=========================================================\n";
 
-    std::cout << "\n========== INTEGRARE AMPLA CLASA DERIVATA (C++ PRO) ==========\n";
+    std::cout << "\n========== INTEGRARE AMPLA CLASA DERIVATA  ==========\n";
     auto asasinTech = std::make_unique<AsasinBazaSecreta>("High-Table Operative", 200, glock, "Drona Hawk-Eye v4");
 
     asasinTech->instaleazaUpgradeTehnologic("Modul_Satelit_AI", 1.8);
@@ -246,7 +257,25 @@ int main() {
 
     std::cout << "===================================================================\n";
 
+    std::cout << "\n========== DEMONSTRATIE MECANICI UNICE DERIVATE (ANTI COPY-PASTE) ==========\n";
 
+    auto eliteMecanic = std::make_unique<AsasinElite>("Zero_V2", 150, glock, 3.0);
+    for(int i = 0; i < 5; ++i) {
+        eliteMecanic->executaAbilitateSpeciala();
+    }
+    std::cout << *eliteMecanic << "\n";
+
+    auto infiltratMecanic = std::make_unique<AsasinInfiltrat>("Sofi_V2", 100, glock, "Oaspete");
+    infiltratMecanic->executaAbilitateSpeciala();
+    infiltratMecanic->executaAbilitateSpeciala();
+    std::cout << *infiltratMecanic << "\n";
+
+    auto trackerMecanic = std::make_unique<AsasinBountyHunter>("Tracker_V2", 120, glock, 2);
+    trackerMecanic->adaugaTintaInUrmarire("Santino_Backup");
+    trackerMecanic->executaAbilitateSpeciala();
+    std::cout << *trackerMecanic << "\n";
+
+    std::cout << "=========================================================================\n";
 
     return 0;
 }

@@ -14,11 +14,28 @@ std::unique_ptr<Asasin> AsasinInfiltrat::clone() const {
 }
 
 void AsasinInfiltrat::executaAbilitateSpeciala() {
-    std::cout << "[Abilitate Infiltrat] " << nume << " se camufleaza ca: " << mascaCurenta << ".\n";
-    this->activeazaModInfiltrare();
+    std::cout << "\n[INFILTRATION MECHANIC] " << nume << " actioneaza din umbra purtand masca: " << mascaCurenta << ".\n";
+
+    nivelSuspiciune += 35;
+
+    if (nivelSuspiciune >= 100) {
+        std::cout << " > [COMPROMIS] Alerta maxima! Identitatea sub masca de '" << mascaCurenta << "' a fost deconspirata!\n";
+        this->esteInfiltrat = false;
+        this->primesteDamage(20);
+        nivelSuspiciune = 0;
+    } else {
+        std::cout << " > Actiune discreta finalizata. Nivel curent de suspiciune: " << nivelSuspiciune << "%\n";
+        this->cresteExperienta(15);
+
+        if (nivelSuspiciune > 50) {
+            this->mascaCurenta = "Personal Serviciu Continental";
+            std::cout << " > Schimbare rapida de deghizare in: " << mascaCurenta << "\n";
+            nivelSuspiciune -= 20;
+        }
+    }
 }
 
 void AsasinInfiltrat::afiseazaDetalii(std::ostream& os) const {
     Asasin::afiseazaDetalii(os);
-    os << " [Mod: Infiltrat | Identitate: " << mascaCurenta << "]";
+    os << " [Infiltrat | Acoperire: " << mascaCurenta << " | Suspiciune: " << nivelSuspiciune << "%]";
 }

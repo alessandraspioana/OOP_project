@@ -171,17 +171,23 @@ int main() {
 
     std::cout << "\n========== TESTARE EXEMPTII CUSTOM ==========\n";
     try {
-        std::cout << "Incercam sa executam un contract foarte scump...\n";
-        Misiune misiuneImposibila("Eliminare Tinta Suprema", 1, 999999);
-        hotel.adaugaMisiune(misiuneImposibila);
+        hotel.afiseazaRegistru();
 
-        hotel.executaContract(0, 1);
+        hotel.organizeazaDuel(0, 1);
+
+        std::cout << "[SIMULARE] Se incearca executarea contractelor de la avizier...\n";
+        hotel.executaContract(0, 0);
+
+        hotel.simuleazaNoapteInHotel();
+
+        hotel.evacueazaDecedatii();
 
     } catch (const ContinentalException& e) {
-        std::cout << ">>> Catch blocat cu succes! Mesaj exceptie Continental: " << e.what() << "\n";
+        std::cout << "\n>>> [ALERTA CODEX INTERCEPTATA] REZOLVARE PROMPT-A: " << e.what() << "\n";
     } catch (const std::exception& e) {
-        std::cout << ">>> Catch general: " << e.what() << "\n";
+        std::cout << ">>> [EROARE DE SISTEM CRITICA]: " << e.what() << "\n";
     }
+    std::cout << "=======================================================\n";
     std::cout << "=========================================================\n";
 
     std::cout << "\n========== TESTARE METODE STATICE SI STL ==========\n";

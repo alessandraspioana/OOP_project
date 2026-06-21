@@ -308,6 +308,8 @@ int main() {
     seifDocumente.depoziteaza("Planul arhitectural al seifului central");
     seifDocumente.afiseazaContinut();
 
+    std::cout << "[SISTEM] Număr documente în seif: " << seifDocumente.getDimensiune() << "\n";
+
     CutieDepozit<Arma> seifArmament("GUN-441A", 2);
     Arma glockDeRezerva("Glock 19 Custom", 15);
     Arma puscaInfiltrat("Benelli M4", 7);

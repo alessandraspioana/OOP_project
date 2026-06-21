@@ -19,6 +19,9 @@
 #include "ConsiliuInalt.h"
 #include "BursaAsasinilor.h"
 #include "ExceptiiHotel.h"
+#include "AsasinFactory.h"
+#include "CodexManager.h"
+#include "CutieDepozit.h"
 
 int main() {
 
@@ -237,7 +240,7 @@ int main() {
     m1.eliminaCerinteInvalide();
     std::cout << "[C++ OPTIMIZATION] Cerinte complexe ramase: " << m1.getNumarCerinteComplexe() << "\n";
 
-    std::cout << "\n========== RUN SIMULATOR AVANSAT SECURITATE (C++ DENSE) ==========\n";
+    std::cout << "\n========== RUN SIMULATOR AVANSAT SECURITATE ==========\n";
     SistemSecuritate testSec2(1);
 
     testSec2.adaugaSenzorPerimetral("Lobby Principal", "Senzor Miscare Laser");
@@ -263,7 +266,7 @@ int main() {
 
     std::cout << "===================================================================\n";
 
-    std::cout << "\n========== DEMONSTRATIE MECANICI UNICE DERIVATE (ANTI COPY-PASTE) ==========\n";
+    std::cout << "\n========== DEMONSTRATIE MECANICI UNICE DERIVATE ==========\n";
 
     auto eliteMecanic = std::make_unique<AsasinElite>("Zero_V2", 150, glock, 3.0);
     for(int i = 0; i < 5; ++i) {
@@ -281,7 +284,40 @@ int main() {
     trackerMecanic->executaAbilitateSpeciala();
     std::cout << *trackerMecanic << "\n";
 
-    std::cout << "=========================================================================\n";
+
+    std::cout << "\n=========================================================\n";
+    std::cout << "==================== TESTARE pt tema 3 =====================\n";
+    std::cout << "=========================================================\n";
+
+    CodexManager::getInstanta().adaugaRegulaSuprema("Ordinul 3: Excommunicado inseamna retragerea oricarui serviciu Continental.");
+    CodexManager::getInstanta().afiseazaCodexSuprem();
+
+
+    std::cout << "\n[FACTORY] Generam un asasin elite prin Fabrica Virtuala...\n";
+    try {
+        auto asasinDeElitaUluitor = AsasinFactory::creeazaAsasin("elite", "John Wick V3", 100, glock);
+        std::cout << " >> Asasin creat cu succes de fabrica: " << *asasinDeElitaUluitor << "\n";
+    } catch (const std::exception& e) {
+        std::cout << "Eroare fabrica: " << e.what() << "\n";
+    }
+
+    std::cout << "\n[TEMPLATE CLASS] Initializam seifurile tematice din subsol...\n";
+
+    CutieDepozit<std::string> seifDocumente("DOC-992X", 3);
+    seifDocumente.depoziteaza("Registru Marcaje de Sange active 2026");
+    seifDocumente.depoziteaza("Planul arhitectural al seifului central");
+    seifDocumente.afiseazaContinut();
+
+    CutieDepozit<Arma> seifArmament("GUN-441A", 2);
+    Arma glockDeRezerva("Glock 19 Custom", 15);
+    Arma puscaInfiltrat("Benelli M4", 7);
+    seifArmament.depoziteaza(glockDeRezerva);
+    seifArmament.depoziteaza(puscaInfiltrat);
+    seifArmament.afiseazaContinut();
+
+    int eficientaArmaA = 85;
+    int eficientaArmaB = 92;
+    comparaEficientaActive(eficientaArmaA, eficientaArmaB);
 
     return 0;
 }

@@ -67,6 +67,9 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         include/ExceptiiHotel.h
         include/AsasinBazaSecreta.h
         src/AsasinBazaSecreta.cpp
+        include/AsasinFactory.h
+        include/CutieDepozit.h
+        include/CodexManager.h
 )
 #target_sources(${MAIN_EXECUTABLE_NAME}
 #    PRIVATE
